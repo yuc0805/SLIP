@@ -2,7 +2,7 @@
 # Supervised Finetuning (QA & Captioning)
 #
 # Checkpoint is automatically downloaded from HuggingFace if not found locally.
-# SFT datasets must be placed under data/opentslm_sft_data/<task_name>/.
+# SFT datasets are automatically loaded from HuggingFace (LeoChen085/SlipSFTDataset).
 
 tasks=(
     "har_cot"

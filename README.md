@@ -406,15 +406,15 @@ python -m evaluation.zs_eval_main \
 
 ### Supervised Finetuning (QA & Captioning)
 
-SFT datasets are loaded from [LeoChen085/SlipSFTDataset](https://huggingface.co/datasets/LeoChen085/SlipSFTDataset) automatically.
+SFT datasets are loaded from [LeoChen085/SlipSFTDataset](https://huggingface.co/datasets/LeoChen085/SlipSFTDataset) automatically. The base checkpoint is auto-downloaded if not found locally.
 
 ```bash
 bash script/eval/sft.sh
 ```
 
-SFT tasks: `har_cot`, `sleep_cot`, `ecg_cot`, `tsqa`, `m4_caption`
+This runs all 5 tasks: `har_cot`, `sleep_cot`, `ecg_cot`, `tsqa`, and `m4_caption`.
 
-Or run a single task:
+Or run a single task (trains from the base checkpoint):
 ```bash
 CUDA_VISIBLE_DEVICES=0,1 HYDRA_FULL_ERROR=1 \
 torchrun --nproc_per_node=2 -m evaluation.sft \
@@ -424,6 +424,8 @@ torchrun --nproc_per_node=2 -m evaluation.sft \
     epochs=4 \
     batch_size=64
 ```
+
+To use a pre-trained SFT checkpoint for inference, see the [Load Task-Specific Checkpoints](#load-task-specific-checkpoints) example in Quick Start.
 
 ## Dataset Classes
 
@@ -443,14 +445,16 @@ All dataset utilities are in `util/dataset.py`:
 
 All checkpoints are hosted on Hugging Face at [LeoChen085/SLIP](https://huggingface.co/LeoChen085/SLIP). See [Installation Step 4](#4-download-pretrained-checkpoint) for download instructions.
 
-| Checkpoint | Description |
-|-----------|-------------|
-| `SLIP_gemma270.pth` | Pretrained SLIP base model |
-| `har.safetensors` | SFT for HAR chain-of-thought QA |
-| `sleep.safetensors` | SFT for Sleep stage chain-of-thought QA |
-| `ecg.safetensors` | SFT for ECG-QA chain-of-thought QA |
-| `tsqa.safetensors` | SFT for time series QA |
-| `caption.safetensors` | SFT for M4 sensor captioning |
+| Checkpoint | HF filename | Description |
+|-----------|-------------|-------------|
+| `ckpt/SLIP_gemma270.pth` | `model.safetensors` | Pretrained SLIP base model (auto-converted on first run) |
+| `ckpt/har.safetensors` | `har.safetensors` | SFT for HAR chain-of-thought QA |
+| `ckpt/sleep.safetensors` | `sleep.safetensors` | SFT for Sleep stage chain-of-thought QA |
+| `ckpt/ecg.safetensors` | `ecg.safetensors` | SFT for ECG-QA chain-of-thought QA |
+| `ckpt/tsqa.safetensors` | `tsqa.safetensors` | SFT for time series QA |
+| `ckpt/caption.safetensors` | `caption.safetensors` | SFT for M4 sensor captioning |
+
+> **Note:** `SLIP_gemma270.pth` is not directly on HuggingFace. The evaluation scripts automatically download `model.safetensors` and convert it to `ckpt/SLIP_gemma270.pth` on first run.
 
 ## Configuration
 
