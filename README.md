@@ -28,7 +28,7 @@ SLIP is an open-source framework for learning language-aligned sensor representa
 ## Architecture
 
 <p align="center">
-  <img src="asset/SLIP_overview.pdf" width="90%">
+  <img src="asset/SLIP_overview.png" width="90%">
 </p>
 
 SLIP comprises four components:
