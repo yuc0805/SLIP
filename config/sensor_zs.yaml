@@ -1,0 +1,37 @@
+hydra:
+  run:
+    dir: SLIP_result/hydra_log/eval/${now:%Y-%m-%d}/${now:%H-%M-%S}
+defaults:
+  - dataset: zs_dataset
+  - model: slip
+  - sensor_encoder: rope_vit_base 
+  - _self_
+sensor_encoder:
+  _recursive_: false  
+-model: ${model}
+
+# system:
+remark: null
+checkpoint: null
+output_dir: 'SLIP_result/classification/ckpt' 
+log_dir: 'SLIP_result/classification/log'
+device: 'cuda'
+seed: 0
+resume: ''
+finetune: null
+eval: null
+dist_eval: false
+world_size: 1
+local_rank: -1
+dist_on_itp: false
+dist_url: 'env://'
+distributed: false
+gpu: 0
+rank: null
+dist_backend: null
+
+#train:
+batch_size: 64
+num_workers: 4
+pin_mem: true
+linear_probe: 'zeroshot'

@@ -1,0 +1,11 @@
+name: rope_vit_base
+_target_: model_factory.ts_transformer.SensorTransformerModel
+embed_dim: 768
+num_heads: 12
+mlp_ratio: 4
+depth: 12
+dropout_rate: 0.1
+learnable_pos_emb: false
+max_position_embeddings: 4880
+patch_size: null
+channel_attn_type: all_attn

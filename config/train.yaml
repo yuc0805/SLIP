@@ -1,0 +1,53 @@
+hydra:
+  run:
+    dir: SLIP_result/hydra_log/pretrain/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+defaults:
+  - dataset: pretrain
+  - model: slip
+  - sensor_encoder: rope_vit_base 
+  - _self_
+sensor_encoder:
+  _recursive_: false  
+-model: ${model}
+
+# system:train
+remark: null
+checkpoint: null
+output_dir: 'SLIP_result/pretrain/${model.name}/ckpt' 
+log_dir: 'SLIP_result/pretrain/${model.name}/log'
+device: 'cuda'
+seed: 0
+resume: ''
+finetune: null
+is_sft: false
+eval: null
+dist_eval: false
+world_size: 1
+local_rank: -1
+dist_on_itp: false
+dist_url: 'env://'
+distributed: false
+gpu: 0
+rank: null
+dist_backend: null
+
+#train:
+batch_size: 64
+accum_iter: 1
+epochs: 40
+save_every_epoch: null
+start_epoch: 0
+num_workers: 4
+prefetch_factor: 2
+pin_mem: true
+
+# optim:
+betas: [0.9, 0.95]
+weight_decay: 5e-2
+lr: 2e-4             # will be set from blr * effective_batch_size / 256
+blr: 1e-4
+lora_lr: null
+min_lr: 1e-7
+warmup_epochs: 4 # default 10% of the total epochs
+max_norm: 1.0
+

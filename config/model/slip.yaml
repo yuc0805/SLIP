@@ -1,0 +1,20 @@
+name: slip
+_target_: model_factory.SLIP.SLIP
+input_size: ${dataset.input_size}
+sensor_encoder_cfg: ${sensor_encoder} 
+# llm config
+max_llm_len: 768
+llm_model_name: "google/gemma-3-270m"
+unlocked_layers: 4 # unlock last n layers
+split_layer: 12
+#
+use_lora: false
+use_llm: true
+fine_grained: false
+# attn_pooling
+common_dim: 640
+num_heads: 5
+num_img_queries: 64
+caption_loss_weight: 1.0 
+contrastive_loss_weight: 1.0
+

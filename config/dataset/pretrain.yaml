@@ -1,0 +1,17 @@
+name: pretrain
+input_size: null
+patch_size: null
+
+# HuggingFace dataset
+hf_repo: "LeoChen085/SlipDataset"
+hf_meta_file: "meta.csv"
+
+dataset:
+  _target_: util.dataset.SLIPhfDataset
+  hf_dataset: null  # will be populated at runtime from hf_repo
+  meta_info: null    # will be populated at runtime from hf_meta_file
+  text_aug: true
+
+collator:
+  _target_: util.dataset.SLIPCollator
+  max_len: ${model.max_llm_len}

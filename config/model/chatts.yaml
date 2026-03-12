@@ -1,0 +1,3 @@
+name: chatts
+llm_model_name: bytedance-research/ChatTS-8B
+input_mode: ts

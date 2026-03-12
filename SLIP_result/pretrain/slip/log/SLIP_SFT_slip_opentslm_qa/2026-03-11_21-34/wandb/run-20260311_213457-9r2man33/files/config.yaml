@@ -1,0 +1,277 @@
+_wandb:
+    value:
+        cli_version: 0.22.2
+        e:
+            1r8onjsik1hoxqrsujcwnaoitnb029jg:
+                args:
+                    - dataset.task_name=har_cot
+                    - finetune=ckpt/SLIP_gemma270.pth
+                    - remark=SLIP_SFT
+                    - epochs=4
+                    - batch_size=64
+                cpu_count: 64
+                cpu_count_logical: 128
+                cudaVersion: "13.0"
+                disk:
+                    /:
+                        total: "210106302464"
+                        used: "81491267584"
+                email: yuc204@ucsd.edu
+                executable: /scratch/leo/envs/llm_env/bin/python
+                gpu: NVIDIA H200 NVL
+                gpu_count: 8
+                gpu_nvidia:
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "150754820096"
+                      name: NVIDIA H200 NVL
+                      uuid: GPU-377f2535-8799-80cb-aee6-4d1821f986b2
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "150754820096"
+                      name: NVIDIA H200 NVL
+                      uuid: GPU-89420cd3-f40b-b1f2-136f-5f1e7b6cbfea
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "150754820096"
+                      name: NVIDIA H200 NVL
+                      uuid: GPU-b47f4d89-5528-865c-2f94-da5a5e7517dd
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "150754820096"
+                      name: NVIDIA H200 NVL
+                      uuid: GPU-986d8d8c-395f-5358-d9e9-cdcdff662811
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "150754820096"
+                      name: NVIDIA H200 NVL
+                      uuid: GPU-a732ea22-a868-8a2d-c5a9-58033de4493d
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "150754820096"
+                      name: NVIDIA H200 NVL
+                      uuid: GPU-44ba2a2d-ba60-0ca2-6eea-23cc3bc32e21
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "150754820096"
+                      name: NVIDIA H200 NVL
+                      uuid: GPU-d83fcdab-26af-5cd2-63d9-07b46b878f48
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "150754820096"
+                      name: NVIDIA H200 NVL
+                      uuid: GPU-dbfc68c1-c8aa-6aaf-26d2-0624da13ae04
+                host: evergreenai-2.cs.dartmouth.edu
+                memory:
+                    total: "1622878572544"
+                os: Linux-6.8.0-87-generic-x86_64-with-glibc2.39
+                program: -m evaluation.sft
+                python: CPython 3.12.3
+                root: SLIP_result/pretrain/slip/log/SLIP_SFT_slip_opentslm_qa/2026-03-11_21-34
+                startedAt: "2026-03-12T01:34:57.907612Z"
+                writerId: 1r8onjsik1hoxqrsujcwnaoitnb029jg
+        m: []
+        python_version: 3.12.3
+        t:
+            "1":
+                - 1
+                - 2
+                - 3
+                - 5
+                - 11
+                - 41
+                - 49
+                - 50
+                - 51
+                - 53
+                - 71
+                - 105
+            "2":
+                - 1
+                - 2
+                - 3
+                - 5
+                - 11
+                - 41
+                - 49
+                - 50
+                - 51
+                - 53
+                - 71
+                - 105
+            "3":
+                - 13
+                - 16
+            "4": 3.12.3
+            "5": 0.22.2
+            "6": 4.57.1
+            "10":
+                - 20
+            "12": 0.22.2
+            "13": linux-x86_64
+accum_iter:
+    value: 1
+batch_size:
+    value: 64
+betas:
+    value:
+        - 0.9
+        - 0.999
+blr:
+    value: 0.001
+checkpoint:
+    value: null
+dataset:
+    value:
+        data_dir: data/opentslm_sft_data/har_cot
+        fold:
+            fold_0:
+                train: None
+                val: None
+        input_size:
+            - 0
+            - 0
+        is_normalize: null
+        name: opentslm_qa
+        patch_size: null
+        task_config:
+            ecg_cot:
+                head_type: classification
+                is_normalize: true
+                num_classes: null
+                patch_size: 20
+            har_cot:
+                head_type: classification
+                is_normalize: false
+                num_classes: 8
+                patch_size: 4
+            m4_caption:
+                head_type: generation
+                is_normalize: true
+                num_classes: null
+                patch_size: null
+            sleep_cot:
+                head_type: classification
+                is_normalize: true
+                num_classes: 6
+                patch_size: 50
+            tsqa:
+                head_type: classification
+                is_normalize: true
+                num_classes: 3
+                patch_size:
+                    "64": 2
+                    "128": 4
+                    "256": 8
+                    "512": 16
+        task_name: har_cot
+device:
+    value: cuda
+dist_backend:
+    value: nccl
+dist_eval:
+    value: false
+dist_on_itp:
+    value: false
+dist_url:
+    value: env://
+distributed:
+    value: true
+epochs:
+    value: 4
+eval:
+    value: null
+evaluate:
+    value: null
+finetune:
+    value: ckpt/SLIP_gemma270.pth
+gpu:
+    value: 0
+is_sft:
+    value: false
+linear_probe:
+    value: sft
+local_rank:
+    value: -1
+log_dir:
+    value: SLIP_result/pretrain/slip/log/SLIP_SFT_slip_opentslm_qa/2026-03-11_21-34
+lora_lr:
+    value: null
+lr:
+    value: null
+max_norm:
+    value: 1
+min_lr:
+    value: 1e-07
+model:
+    value:
+        _target_: model_factory.SLIP.SLIP
+        caption_loss_weight: 1
+        common_dim: 640
+        contrastive_loss_weight: 1
+        fine_grained: false
+        input_size:
+            - 0
+            - 0
+        llm_model_name: google/gemma-3-270m
+        max_llm_len: 768
+        name: slip
+        num_heads: 5
+        num_img_queries: 64
+        sensor_encoder_cfg:
+            _recursive_: false
+            _target_: model_factory.ts_transformer.SensorTransformerModel
+            channel_attn_type: all_attn
+            depth: 12
+            dropout_rate: 0.1
+            embed_dim: 768
+            learnable_pos_emb: false
+            max_position_embeddings: 4880
+            mlp_ratio: 4
+            name: rope_vit_base
+            num_heads: 12
+            patch_size: null
+        split_layer: 12
+        unlocked_layers: 4
+        use_llm: true
+        use_lora: false
+num_workers:
+    value: 4
+output_dir:
+    value: SLIP_result/pretrain/slip/ckpt/SLIP_SFT_slip_opentslm_qa/2026-03-11_21-34
+pin_mem:
+    value: true
+prefetch_factor:
+    value: 2
+rank:
+    value: 0
+remark:
+    value: SLIP_SFT_slip_opentslm_qa
+resume:
+    value: ""
+save_every_epoch:
+    value: 1000
+seed:
+    value: 0
+sensor_encoder:
+    value:
+        _recursive_: false
+        _target_: model_factory.ts_transformer.SensorTransformerModel
+        channel_attn_type: all_attn
+        depth: 12
+        dropout_rate: 0.1
+        embed_dim: 768
+        learnable_pos_emb: false
+        max_position_embeddings: 4880
+        mlp_ratio: 4
+        name: rope_vit_base
+        num_heads: 12
+        patch_size: null
+start_epoch:
+    value: 0
+warmup_epochs:
+    value: 1
+weight_decay:
+    value: 0.05
+world_size:
+    value: 2

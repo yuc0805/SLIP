@@ -1,0 +1,230 @@
+[21:35:02.503772] Number of Samples: 68542
+[21:35:03.233406] Locking 9 unimodal modules (Embeddings + Layers 0 to 7).
+[21:35:03.234453] Unimodal layers 8 to 11 remain trainable.
+[21:35:03.292123] SFT finetune from ckpt/SLIP_gemma270.pth
+[21:35:04.093182] <All keys matched successfully>
+[21:35:05.238735] Model = SLIP(
+  (sensor_encoder): SensorTransformerModel(
+    (patch_embed): MultiSizePatchEmbed(
+      (shared_linear): Linear(in_features=96, out_features=3072, bias=True)
+      (shared_residual): Linear(in_features=96, out_features=768, bias=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+      (act): SiLUActivation()
+      (output_layer): Linear(in_features=3072, out_features=768, bias=True)
+    )
+    (blocks): ModuleList(
+      (0-11): 12 x SensorEncoderLayer(
+        (ts_attn): AllAttention(
+          (self_attention): TsRoPEAttention(
+            (q_proj): Linear(in_features=768, out_features=768, bias=True)
+            (k_proj): Linear(in_features=768, out_features=768, bias=True)
+            (v_proj): Linear(in_features=768, out_features=768, bias=True)
+            (o_proj): Linear(in_features=768, out_features=768, bias=False)
+            (rotary_emb): RotaryEmbedding()
+          )
+          (layer_norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+        (ffn_layer): MLP(
+          (gate_proj): Linear(in_features=768, out_features=3072, bias=False)
+          (up_proj): Linear(in_features=768, out_features=3072, bias=False)
+          (down_proj): Linear(in_features=3072, out_features=768, bias=False)
+          (act_fn): SiLUActivation()
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+  )
+  (multimodalModel): Gemma3MultimodalModel(
+    (model): Gemma3ForCausalLM(
+      (model): Gemma3TextModel(
+        (embed_tokens): Gemma3TextScaledWordEmbedding(262144, 640, padding_idx=0)
+        (layers): ModuleList(
+          (0-11): 12 x Gemma3DecoderLayer(
+            (self_attn): Gemma3Attention(
+              (q_proj): Linear(in_features=640, out_features=1024, bias=False)
+              (k_proj): Linear(in_features=640, out_features=256, bias=False)
+              (v_proj): Linear(in_features=640, out_features=256, bias=False)
+              (o_proj): Linear(in_features=1024, out_features=640, bias=False)
+              (q_norm): Gemma3RMSNorm((256,), eps=1e-06)
+              (k_norm): Gemma3RMSNorm((256,), eps=1e-06)
+            )
+            (mlp): Gemma3MLP(
+              (gate_proj): Linear(in_features=640, out_features=2048, bias=False)
+              (up_proj): Linear(in_features=640, out_features=2048, bias=False)
+              (down_proj): Linear(in_features=2048, out_features=640, bias=False)
+              (act_fn): GELUTanh()
+            )
+            (input_layernorm): Gemma3RMSNorm((640,), eps=1e-06)
+            (post_attention_layernorm): Gemma3RMSNorm((640,), eps=1e-06)
+            (pre_feedforward_layernorm): Gemma3RMSNorm((640,), eps=1e-06)
+            (post_feedforward_layernorm): Gemma3RMSNorm((640,), eps=1e-06)
+          )
+          (12-17): 6 x Gemma3MultimodalLayer(
+            (original_layer): Gemma3DecoderLayer(
+              (self_attn): Gemma3Attention(
+                (q_proj): Linear(in_features=640, out_features=1024, bias=False)
+                (k_proj): Linear(in_features=640, out_features=256, bias=False)
+                (v_proj): Linear(in_features=640, out_features=256, bias=False)
+                (o_proj): Linear(in_features=1024, out_features=640, bias=False)
+                (q_norm): Gemma3RMSNorm((256,), eps=1e-06)
+                (k_norm): Gemma3RMSNorm((256,), eps=1e-06)
+              )
+              (mlp): Gemma3MLP(
+                (gate_proj): Linear(in_features=640, out_features=2048, bias=False)
+                (up_proj): Linear(in_features=640, out_features=2048, bias=False)
+                (down_proj): Linear(in_features=2048, out_features=640, bias=False)
+                (act_fn): GELUTanh()
+              )
+              (input_layernorm): Gemma3RMSNorm((640,), eps=1e-06)
+              (post_attention_layernorm): Gemma3RMSNorm((640,), eps=1e-06)
+              (pre_feedforward_layernorm): Gemma3RMSNorm((640,), eps=1e-06)
+              (post_feedforward_layernorm): Gemma3RMSNorm((640,), eps=1e-06)
+            )
+            (cross_attn_block): Residual(
+              (fn): CrossAttention(
+                (norm): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+                (context_norm): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+                (q_proj): Linear(in_features=640, out_features=640, bias=True)
+                (k_proj): Linear(in_features=640, out_features=640, bias=True)
+                (v_proj): Linear(in_features=640, out_features=640, bias=True)
+                (o_proj): Linear(in_features=640, out_features=640, bias=False)
+              )
+            )
+          )
+        )
+        (norm): Gemma3RMSNorm((640,), eps=1e-06)
+        (rotary_emb): Gemma3RotaryEmbedding()
+        (rotary_emb_local): Gemma3RotaryEmbedding()
+      )
+      (lm_head): Linear(in_features=640, out_features=262144, bias=False)
+    )
+  )
+  (img_attn_pool): AttentionPooling(
+    (cross_attn): CrossAttention(
+      (norm): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+      (context_norm): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+      (q_proj): Linear(in_features=640, out_features=640, bias=True)
+      (k_proj): Linear(in_features=768, out_features=640, bias=True)
+      (v_proj): Linear(in_features=768, out_features=640, bias=True)
+      (o_proj): Linear(in_features=640, out_features=640, bias=False)
+    )
+    (ffn_norm): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+    (ffn_layer): MLP(
+      (gate_proj): Linear(in_features=640, out_features=2560, bias=False)
+      (up_proj): Linear(in_features=640, out_features=2560, bias=False)
+      (down_proj): Linear(in_features=2560, out_features=640, bias=False)
+      (act_fn): SiLUActivation()
+    )
+    (post_norm): LayerNorm((640,), eps=1e-05, elementwise_affine=True)
+  )
+  (img_to_latents): EmbedToLatents(
+    (to_latents): Linear(in_features=640, out_features=640, bias=False)
+  )
+  (text_to_latents): EmbedToLatents(
+    (to_latents): Linear(in_features=640, out_features=640, bias=False)
+  )
+  (ce): CrossEntropyLoss()
+)
+[21:35:05.240503] base lr: 1.00e-03
+[21:35:05.240944] actual lr: 5.00e-04
+[21:35:05.241316] accumulate grad iterations: 1
+[21:35:05.241672] effective batch size: 128
+[21:35:05.242034] lr: 5.000e-04
+[21:35:05.242385] use distributed!!
+[21:35:05.280180] AdamW (
+Parameter Group 0
+    amsgrad: False
+    betas: [0.9, 0.999]
+    capturable: False
+    decoupled_weight_decay: True
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 0.0005
+    maximize: False
+    weight_decay: 0.05
+)
+/scratch/leo/workspace/SLIP_Submit/util/misc.py:255: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self._scaler = torch.cuda.amp.GradScaler()
+[21:35:05.283065] number of params: 401.59M
+[21:35:05.284898] trainable number of params: 189.22M
+[21:35:05.285383] Start training for 4 epochs
+[21:35:05.289166] log_dir: SLIP_result/pretrain/slip/log/SLIP_SFT_slip_opentslm_qa/2026-03-11_21-34/wandb/run-20260311_213457-9r2man33/files
+[21:35:12.133328] Epoch: [0]  [  0/535]  eta: 1:01:00  lr: 0.000000  loss: 2.0092 (2.0092)  time: 6.8427  data: 0.7222  max mem: 71673
+[21:35:39.505447] Epoch: [0]  [ 50/535]  eta: 0:05:25  lr: 0.000047  loss: 0.8155 (1.2533)  time: 0.3126  data: 0.0001  max mem: 81485
+[21:35:49.331724] [21:35:49.333218] [21:35:49.333707] [21:35:49.334089] [21:35:49.334474] [21:35:49.334849] [21:35:49.335210] [21:35:49.335579] [21:35:49.335939] [21:35:49.336303] [21:35:49.336686] [21:35:49.337049] [21:35:49.337410] [21:35:49.337766] [21:35:49.338117]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/scratch/leo/workspace/SLIP_Submit/evaluation/sft.py", line 1129, in <module>
+    main()
+  File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+    _run_hydra(
+  File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+    _run_app(
+  File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+    run_and_report(
+  File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+    return func()
+           ^^^^^^
+  File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+    lambda: hydra.run(
+            ^^^^^^^^^^
+  File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 119, in run
+    ret = run_job(
+          ^^^^^^^^
+  File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+    ret.return_value = task_function(task_cfg)
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/leo/workspace/SLIP_Submit/evaluation/sft.py", line 407, in main
+    train_stats = train_one_epoch(
+                  ^^^^^^^^^^^^^^^^
+  File "/scratch/leo/workspace/SLIP_Submit/train_engine.py", line 98, in train_one_epoch
+    loss.backward()
+  File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/torch/_tensor.py", line 647, in backward
+    torch.autograd.backward(
+  File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/torch/autograd/__init__.py", line 354, in backward
+    _engine_run_backward(
+  File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/torch/autograd/graph.py", line 829, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "<frozen runpy>", line 198, in _run_module_as_main
+[rank0]:   File "<frozen runpy>", line 88, in _run_code
+[rank0]:   File "/scratch/leo/workspace/SLIP_Submit/evaluation/sft.py", line 1129, in <module>
+[rank0]:     main()
+[rank0]:   File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+[rank0]:     _run_hydra(
+[rank0]:   File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+[rank0]:     _run_app(
+[rank0]:   File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+[rank0]:     run_and_report(
+[rank0]:   File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+[rank0]:     return func()
+[rank0]:            ^^^^^^
+[rank0]:   File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+[rank0]:     lambda: hydra.run(
+[rank0]:             ^^^^^^^^^^
+[rank0]:   File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 119, in run
+[rank0]:     ret = run_job(
+[rank0]:           ^^^^^^^^
+[rank0]:   File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/hydra/core/utils.py", line 186, in run_job
+[rank0]:     ret.return_value = task_function(task_cfg)
+[rank0]:                        ^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/scratch/leo/workspace/SLIP_Submit/evaluation/sft.py", line 407, in main
+[rank0]:     train_stats = train_one_epoch(
+[rank0]:                   ^^^^^^^^^^^^^^^^
+[rank0]:   File "/scratch/leo/workspace/SLIP_Submit/train_engine.py", line 98, in train_one_epoch
+[rank0]:     loss.backward()
+[rank0]:   File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/torch/_tensor.py", line 647, in backward
+[rank0]:     torch.autograd.backward(
+[rank0]:   File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/torch/autograd/__init__.py", line 354, in backward
+[rank0]:     _engine_run_backward(
+[rank0]:   File "/scratch/leo/envs/llm_env/lib/python3.12/site-packages/torch/autograd/graph.py", line 829, in _engine_run_backward
+[rank0]:     return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+[rank0]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]: KeyboardInterrupt

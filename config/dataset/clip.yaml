@@ -1,0 +1,14 @@
+name: clip
+input_size: [8,1440]
+patch_size: [1,30]
+
+dataset:
+  _target_: util.dataset.CLIPDataset
+  data_dir: 'placeholder'
+
+  sensor_aug: null
+  text_aug: true
+
+collator:
+  _target_: util.dataset.CLIPCollator
+  max_len: ${model.max_llm_len}

@@ -1,0 +1,83 @@
+name: lp_dataset
+input_size: [0,0] # placeholder
+task_name: uci_har # default task
+is_normalize: null # placeholder
+patch_size: null # placeholder, default will be 16
+
+data_dir: "data/lp_dataset/${.task_name}"
+hf_repo: "LeoChen085/SlipDataset"  # auto-download from HuggingFace if data_dir not found
+fold: # place holder.
+  fold_0:
+    train: "None"
+    val: "None"
+
+task_config:
+  uci_har:
+    num_classes: 7
+    head_type: classification
+    is_normalize: false 
+    patch_size: 20
+
+  wesad: 
+    num_classes: 3
+    head_type: classification
+    is_normalize: false 
+    patch_size: 16
+
+  PPG_CVA:
+    num_classes: 2
+    head_type: classification
+    is_normalize: false
+    patch_size: 2 
+
+
+  PPG_DM:
+    num_classes: 2
+    head_type: classification
+    is_normalize: false
+    patch_size: 8
+
+  PPG_HTN:
+    num_classes: 4
+    head_type: classification
+    is_normalize: false
+    patch_size: 4 
+
+  wisdm:
+    num_classes: 18
+    head_type: classification
+    is_normalize: true
+    patch_size: 15
+
+  studentlife:
+    num_classes: 3
+    head_type: classification
+    is_normalize: false 
+    patch_size: 24 
+
+  ptbxl:
+    num_classes: 5
+    head_type: classification
+    is_normalize: true 
+    patch_size: 8 
+    
+  sleepEDF:
+    num_classes: 5
+    head_type: classification
+    is_normalize: true
+    patch_size: 15
+
+
+  AsphaltObstacles:
+    num_classes: 4
+    head_type: classification
+    is_normalize: true
+    patch_size: 16
+  
+  Beijing_AQI:
+    num_classes: 5
+    head_type: classification
+    is_normalize: true
+    patch_size: 8
+
+sensor_aug: false
