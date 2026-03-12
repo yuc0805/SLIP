@@ -304,7 +304,7 @@ CUDA_VISIBLE_DEVICES=7 \
         --config-name sensor_zs \
         dataset.task_name="PPG_CVA" \
         batch_size=16 \
-        finetune="/scratch/leo/SensorSLM_Result/pretrain/gemma_coca/ckpt/all_attention_gemma_coca_utsd/2026-01-16_17-30/checkpoint-39.pth" \
+        finetune="ckpt/SLIP_gemma270.pth" \
         remark="SLIP_Base"
 
 '''

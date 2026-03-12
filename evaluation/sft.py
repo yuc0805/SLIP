@@ -247,15 +247,30 @@ def main(cfg: DictConfig):
 
         model = get_peft_model(model, lora_config)
     
+    TASK_TO_SAFETENSORS = {
+        'har_cot': 'har.safetensors',
+        'sleep_cot': 'sleep.safetensors',
+        'ecg_cot': 'ecg.safetensors',
+        'tsqa': 'tsqa.safetensors',
+        'm4_caption': 'caption.safetensors',
+    }
+
     if cfg.evaluate:
-        try:
-            print('loading best model for test evaluation ...')
-            model_ckpt = torch.load(cfg.evaluate, map_location='cpu',weights_only=False)
+        print('loading best model for test evaluation ...')
+        if os.path.exists(cfg.evaluate):
+            model_ckpt = torch.load(cfg.evaluate, map_location='cpu', weights_only=False)
             msg = model.load_state_dict(model_ckpt['model'])
             print(msg)
-            
-        except:
-            print('loading best model for evaluation failed, using the current model weights ...')
+        else:
+            # Treat as HuggingFace repo ID — download task-specific safetensors
+            from huggingface_hub import hf_hub_download
+            from safetensors.torch import load_file
+            filename = TASK_TO_SAFETENSORS.get(task_name, 'model.safetensors')
+            print(f"Downloading {filename} from {cfg.evaluate} for task '{task_name}'...")
+            safetensors_path = hf_hub_download(cfg.evaluate, filename)
+            state_dict = load_file(safetensors_path)
+            msg = model.load_state_dict(state_dict, strict=False)
+            print(msg)
 
         model.to(device)
         model_without_ddp = model
@@ -306,6 +321,16 @@ def main(cfg: DictConfig):
 
 
     if cfg.finetune:
+        # Auto-download checkpoint from HuggingFace if not found locally
+        if not os.path.exists(cfg.finetune):
+            print(f"Checkpoint not found at {cfg.finetune}, downloading from HuggingFace...")
+            from huggingface_hub import hf_hub_download
+            from safetensors.torch import load_file
+            safetensors_path = hf_hub_download("LeoChen085/SLIP", "model.safetensors")
+            state_dict = load_file(safetensors_path)
+            os.makedirs(os.path.dirname(cfg.finetune) or "ckpt", exist_ok=True)
+            torch.save({"model": state_dict}, cfg.finetune)
+            print(f"Downloaded and converted checkpoint to {cfg.finetune}")
         # SFT ...
         print('SFT finetune from %s' % cfg.finetune)
         checkpoint = torch.load(cfg.finetune, map_location='cpu',weights_only=False)
@@ -674,52 +699,57 @@ def extract_activity_label(prediction: str) -> str:
 
 
 import re
+
 def extract_cot_activity_label(prediction: str) -> str:
+
+    ALLOWED = {
+    "biking", "lying", "running", "sitting", "standing", "walking",
+    "walking_down", "walking_up"}
+    
     if not prediction:
         return "unknown"
 
-    text = prediction.lower().strip()
-
-    # 1. Prefer the LAST occurrence of "answer"
-    # This handles repeated hallucinated answers earlier in the text
-    answer_matches = list(
-        re.finditer(r"answer\s*[:.\-]?\s*([a-z_ ]+)", text)
+    pattern = re.compile(
+        r'\banswer\b\s*[:.]\s*"?\s*'
+        r'(biking|lying|running|sitting|standing|walking(?:\s*(?:down|up)|_(?:down|up))?)\b',
+        flags=re.IGNORECASE
     )
 
-    if answer_matches:
-        raw = answer_matches[-1].group(1)
-    else:
-        # 2. Fallback: take the last word-like token in the text
-        raw = text.split()[-1]
+    for m in pattern.finditer(prediction):
+        raw = m.group(1).lower().strip()
+        raw = raw.replace(" ", "_")
+        if raw == "walkingdown":
+            raw = "walking_down"
+        if raw == "walkingup":
+            raw = "walking_up"
+        if raw in ALLOWED:
+            return raw
 
-    # 3. Clean numeric suffixes and punctuation
-    raw = re.sub(r"[^a-z_ ]", "", raw)
-
-    # 4. Normalize spacing variants
-    raw = raw.strip().replace(" ", "_")
-
-    # 5. Handle common corruptions like walking upression
-    # Keep only the leading alphabetic chunk
-    raw = re.match(r"[a-z_]+", raw).group(0) if re.match(r"[a-z_]+", raw) else raw
-
-    return raw if raw else "unknown"
+    return "unknown"
 
 
-def calculate_cot_accuracy(results):
+def calculate_cot_accuracy(result_path):
+    with open(result_path, 'r') as f:
+        results = json.load(f)
+
     num_correct = 0
     num_total = len(results)
 
-    for row in results:
+    pred_list = []
+    gt_list = []
+    for i, row in enumerate(results):
         # Standardize Ground Truth
-        # gt_label = extract_activity_label(row['gt'])
         gt_label = extract_cot_activity_label(row['gt'])
         pred = extract_cot_activity_label(row['pred'])
+        pred_list.append(pred)
+        gt_list.append(gt_label)
 
         if pred == gt_label:
             num_correct += 1
         
         else:
             pass
+            print(f"{i}| GT: {gt_label} | Pred: {pred}")
 
     accuracy = (num_correct / num_total * 100) if num_total > 0 else 0
     
@@ -1127,3 +1157,23 @@ def chatts_mcq_test(model, tokenizer, data_loader, device,
 
 if __name__ == '__main__':
     main()
+
+
+'''
+example inference
+
+CUDA_VISIBLE_DEVICES=7 HYDRA_FULL_ERROR=1 PYTHONPATH=/scratch/leo/workspace/SLIP_Submit \
+python evaluation/sft.py \
+    dataset.task_name=har_cot \
+    evaluate=LeoChen085/SLIP \
+    batch_size=64 \
+    num_workers=2
+
+    
+CUDA_VISIBLE_DEVICES=4,5,6,7 HYDRA_FULL_ERROR=1 
+torchrun --nproc_per_node=4 evaluation/sft.py \
+    dataset.task_name=har_cot \
+    evaluate=LeoChen085/SLIP \
+    batch_size=64 \
+    num_workers=2
+'''

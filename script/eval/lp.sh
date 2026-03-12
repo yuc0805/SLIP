@@ -40,6 +40,6 @@ for task in "${tasks[@]}"; do
         --config-name sensor_lp \
         dataset.task_name="$task" \
         batch_size=${batch_sizes[$task]} \
-        finetune="ckpt/slip.pth" \
+        finetune="ckpt/SLIP_gemma270.pth" \
         remark="SLIP_Base"
 done

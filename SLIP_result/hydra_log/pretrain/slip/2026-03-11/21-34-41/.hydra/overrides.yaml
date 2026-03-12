@@ -1,5 +1,0 @@
-- dataset.task_name=har_cot
-- finetune=ckpt/SLIP_gemma270.pth
-- remark=SLIP_SFT
-- epochs=4
-- batch_size=64
