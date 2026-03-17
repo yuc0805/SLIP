@@ -6,7 +6,7 @@ Yuliang Chen, Arvind Pillai, Yu Yvonne Wu, Tess Z. Griffin, Lisa Marsch, Michael
 
 Dartmouth College
 
-[[Paper]](asset/manuscript.pdf) [[Model]](https://huggingface.co/LeoChen085/SLIP) [[Dataset]](https://huggingface.co/datasets/LeoChen085/SlipDataset) [[Demo]](demo.ipynb)
+[[Paper]](https://arxiv.org/abs/2603.11950) [[Model]](https://huggingface.co/LeoChen085/SLIP) [[Dataset]](https://huggingface.co/datasets/LeoChen085/SlipDataset) [[Demo]](demo.ipynb)
 
 ---
 
@@ -471,8 +471,11 @@ All configs use [Hydra](https://hydra.cc/). Key config files:
 @article{chen2026slip,
   title={Learning Transferable Sensor Models via Language-Informed Pretraining},
   author={Chen, Yuliang and Pillai, Arvind and Wu, Yu Yvonne and Griffin, Tess Z. and Marsch, Lisa and Heinz, Michael V. and Jacobson, Nicholas C. and Campbell, Andrew},
-  journal={Preprint},
-  year={2026}
+  journal={arXiv preprint arXiv:2603.11950},
+  year={2026},
+  eprint={2603.11950},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI}
 }
 ```
 
