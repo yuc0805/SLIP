@@ -12,7 +12,7 @@ Dartmouth College
 
 ## Overview
 
-SLIP is an open-source framework for learning language-aligned sensor representations that generalize across diverse sensor setups. It integrates contrastive alignment with sensor-conditioned captioning, enabling both discriminative understanding and generative reasoning over multivariate time series from heterogeneous sensors.
+SLIP is an open-source framework for learning language-aligned sensor representations that generalize across diverse sensor configurations. It integrates contrastive alignment with sensor-conditioned captioning, enabling both discriminative understanding and generative reasoning over multivariate time series from heterogeneous sensors.
 
 **Key features:**
 - **FlexMLP**: A weight-sharing patch embedding that dynamically adapts to different temporal resolutions and variable-length inputs without retraining
